@@ -13,6 +13,8 @@ public class PlayerControl : MonoBehaviour
     bool isJumping = false;
    
     bool canjump = false;
+
+ 
    
    
     void Start()
@@ -41,8 +43,9 @@ public class PlayerControl : MonoBehaviour
    void AirMove()
     {
         Vector3 moveVelocity = Vector3.zero;
-      
-        if(gameObject.layer == 7)
+
+        if (gameObject.layer == 7)
+        {
             if (Input.GetKey(KeyCode.A))
             {
                 moveVelocity = Vector2.left;
@@ -60,11 +63,22 @@ public class PlayerControl : MonoBehaviour
                 moveVelocity = Vector2.up;
             }
             transform.position += moveVelocity * moveSpeed * Time.deltaTime;
+            
+            if (Input.GetAxis("Vertical") == 0)
+            {
+
+                transform.position += new Vector3(0, 0, 0);
+                rigid.gravityScale = 0;
+            }
+        }
         
     }
 
     void Jump()
     {
+        if(gameObject.layer == 7) {
+            isJumping = false;
+        }
         if (!canjump)
         {
             if (!isJumping) 
