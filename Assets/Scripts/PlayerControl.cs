@@ -29,7 +29,12 @@ public class PlayerControl : MonoBehaviour
         {
             isJumping = true;
         }
-        
+        if (Input.GetKeyDown(KeyCode.Space) && gameObject.layer == 7)
+        {
+            rigid.gravityScale = 0;
+            
+        }
+
     }
 
     void FixedUpdate()
@@ -37,7 +42,6 @@ public class PlayerControl : MonoBehaviour
         FloorMove();
         Jump();
         AirMove();
-        
     }
 
    void AirMove()
@@ -63,13 +67,6 @@ public class PlayerControl : MonoBehaviour
                 moveVelocity = Vector2.up;
             }
             transform.position += moveVelocity * moveSpeed * Time.deltaTime;
-            
-            if (Input.GetAxis("Vertical") == 0)
-            {
-
-                transform.position += new Vector3(0, 0, 0);
-                rigid.gravityScale = 0;
-            }
         }
         
     }
@@ -82,7 +79,6 @@ public class PlayerControl : MonoBehaviour
         if (!canjump)
         {
             if (!isJumping) 
-
                 return;
             gameObject.layer = 7;
             
@@ -126,13 +122,9 @@ public class PlayerControl : MonoBehaviour
         if (gameObject.activeInHierarchy)
         {
             if (collision.gameObject.CompareTag("Floor"))
-
             {
                 gameObject.layer = 6;
-              
-
-
-               
+                rigid.gravityScale = 150;
             }
         }
     }
