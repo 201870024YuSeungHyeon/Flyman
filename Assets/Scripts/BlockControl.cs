@@ -13,6 +13,6 @@ public class BlockControl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        transform.localPosition += new Vector3(-11, -100, 0) * 7 * Time.deltaTime;
     }
 }

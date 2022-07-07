@@ -29,10 +29,17 @@ public class PlayerControl : MonoBehaviour
         {
             isJumping = true;
         }
-        if (Input.GetKeyDown(KeyCode.Space) && gameObject.layer == 7)
+        if (Input.GetKeyDown(KeyCode.Space))
         {
-            rigid.gravityScale = 0;
-            
+            if (gameObject.layer == 7 && rigid.gravityScale != 0)
+            {
+                rigid.gravityScale = 0;
+                transform.GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
+            }
+            else if (rigid.gravityScale == 0)
+            {
+                rigid.gravityScale = 150;
+            }
         }
 
     }
@@ -50,7 +57,23 @@ public class PlayerControl : MonoBehaviour
 
         if (gameObject.layer == 7)
         {
-            if (Input.GetKey(KeyCode.A))
+            if (Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.W))
+            {
+                moveVelocity = new Vector2(-1,1);
+            }
+            else if (Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.S))
+            {
+                moveVelocity = new Vector2(-1, -1);
+            }
+            else if (Input.GetKey(KeyCode.D) && Input.GetKey(KeyCode.W))
+            {
+                moveVelocity = new Vector2(1, 1);
+            }
+            else if (Input.GetKey(KeyCode.D) && Input.GetKey(KeyCode.S))
+            {
+                moveVelocity = new Vector2(1, -1);
+            }
+            else if (Input.GetKey(KeyCode.A))
             {
                 moveVelocity = Vector2.left;
             }
