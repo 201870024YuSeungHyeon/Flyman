@@ -9,20 +9,29 @@ public class Gaugebar : MonoBehaviour
     public Slider slider;
     public Text displaytext;
     private float currentValue = 0f;
-  
+    public bool isValue = false;
    
     void Start()
-
     {
-        
         CurrentValue = 0f;
     }
 
     // Update is called once per frame
     void Update()
     {
-        currentValue += 0.0043f;
+        if (isValue == false)
+        {
+            CurrentValue += 0.0043f;
+        }
+        else if (isValue == true)
+        {
+            CurrentValue -= 0.0043f;
+        }
 
+        if (CurrentValue < 0)
+            CurrentValue = 0;
+        else if (CurrentValue > 1)
+            CurrentValue = 1;
     }
 
     public float CurrentValue

@@ -13,8 +13,7 @@ public class PlayerControl : MonoBehaviour
     bool isJumping = false;
    
     bool canjump = false;
-    public bool isbooster = false;
-    Gaugebar gb;
+    public Gaugebar gb;
 
  
    
@@ -27,22 +26,6 @@ public class PlayerControl : MonoBehaviour
    
     void Update()
     {
-        OnBooster();
-        
-        
-      
-
-    }
-
-    void FixedUpdate()
-    {
-        FloorMove();
-        Jump();
-        AirMove();
-    }
-
-    void OnBooster()
-    {
         if (Input.GetKeyDown(KeyCode.Space))
         {
             isJumping = true;
@@ -53,15 +36,23 @@ public class PlayerControl : MonoBehaviour
             {
                 rigid.gravityScale = 0;
                 transform.GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
-                isbooster = true;
+                gb.isValue = true;
             }
             else if (rigid.gravityScale == 0)
             {
-                isbooster = false;
                 rigid.gravityScale = 150;
+                gb.isValue = false;
             }
         }
     }
+
+    void FixedUpdate()
+    {
+        FloorMove();
+        Jump();
+        AirMove();
+    }
+
 
    void AirMove()
     {
@@ -160,6 +151,7 @@ public class PlayerControl : MonoBehaviour
             {
                 gameObject.layer = 6;
                 rigid.gravityScale = 150;
+                gb.isValue = false;
             }
         }
     }
