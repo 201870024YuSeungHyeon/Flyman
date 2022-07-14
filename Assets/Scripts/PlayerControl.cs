@@ -32,19 +32,19 @@ public class PlayerControl : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            if (gameObject.layer == 7 && rigid.gravityScale != 0 && gb.CurrentValue == 1)
+            if (gameObject.layer == 7 && rigid.gravityScale != 0 && gb.CurrentValue == 1) // 부스터 ON
             {
                 rigid.gravityScale = 0;
                 transform.GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
                 gb.isValue = true;
             }
-            else if (rigid.gravityScale == 0)
+            else if (rigid.gravityScale == 0) // 부스터 수동 OFF
             {
                 rigid.gravityScale = 150;
                 gb.isValue = false;
             }
         }
-        if (gb.CurrentValue <= 0)
+        if (gb.CurrentValue <= 0) // 부스터 자동 OFF(부스터 게이지가 0일 때)
         {
             rigid.gravityScale = 150;
             gb.isValue = false;
@@ -59,11 +59,11 @@ public class PlayerControl : MonoBehaviour
     }
 
 
-   void AirMove()
+   void AirMove() // 공중 이동
     {
         Vector3 moveVelocity = Vector3.zero;
 
-        if (gameObject.layer == 7)
+        if (gameObject.layer == 7) // 공중 대각선, 직선 이동
         {
             if (Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.W))
             {
@@ -102,7 +102,7 @@ public class PlayerControl : MonoBehaviour
         
     }
 
-    void Jump()
+    void Jump() // 점프
     {
         if(gameObject.layer == 7) {
             isJumping = false;
@@ -128,7 +128,7 @@ public class PlayerControl : MonoBehaviour
     }
 
 
-    void FloorMove()
+    void FloorMove() // 지상 이동
     {
         Vector3 moveVelocity = Vector3.zero;
         if (gameObject.layer == 6)
@@ -152,7 +152,7 @@ public class PlayerControl : MonoBehaviour
     {
         if (gameObject.activeInHierarchy)
         {
-            if (collision.gameObject.CompareTag("Floor"))
+            if (collision.gameObject.CompareTag("Floor")) // 지상에서 상태 변경
             {
                 gameObject.layer = 6;
                 rigid.gravityScale = 150;

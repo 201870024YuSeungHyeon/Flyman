@@ -19,16 +19,16 @@ public class Gaugebar : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (isValue == false)
+        if (isValue == false) // 부스터 꺼졌을 때
         {
-            CurrentValue += 0.0005f;
+            CurrentValue += 0.0005f; // 게이지 증가
         }
-        else if (isValue == true)
+        else if (isValue == true) // 부스터 켜졌을 때
         {
-            CurrentValue -= 0.0005f;
+            CurrentValue -= 0.0005f; // 게이지 감소
         }
 
-        if (CurrentValue < 0)
+        if (CurrentValue < 0) // 부스터 수치 방지턱
         {
             CurrentValue = 0;
         }
