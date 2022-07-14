@@ -21,15 +21,17 @@ public class Gaugebar : MonoBehaviour
     {
         if (isValue == false)
         {
-            CurrentValue += 0.0043f;
+            CurrentValue += 0.0005f;
         }
         else if (isValue == true)
         {
-            CurrentValue -= 0.0043f;
+            CurrentValue -= 0.0005f;
         }
 
         if (CurrentValue < 0)
+        {
             CurrentValue = 0;
+        }
         else if (CurrentValue > 1)
             CurrentValue = 1;
     }

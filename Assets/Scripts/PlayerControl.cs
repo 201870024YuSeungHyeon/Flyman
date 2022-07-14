@@ -32,7 +32,7 @@ public class PlayerControl : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            if (gameObject.layer == 7 && rigid.gravityScale != 0)
+            if (gameObject.layer == 7 && rigid.gravityScale != 0 && gb.CurrentValue == 1)
             {
                 rigid.gravityScale = 0;
                 transform.GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
@@ -43,6 +43,11 @@ public class PlayerControl : MonoBehaviour
                 rigid.gravityScale = 150;
                 gb.isValue = false;
             }
+        }
+        if (gb.CurrentValue <= 0)
+        {
+            rigid.gravityScale = 150;
+            gb.isValue = false;
         }
     }
 
