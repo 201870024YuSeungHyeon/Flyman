@@ -21,6 +21,7 @@ public class BlockControl : MonoBehaviour
         else if(gameObject.layer == 9) //땅에 닿았을 때
         {
             transform.GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
+           
         }
         Vector3 view = Camera.main.WorldToScreenPoint(transform.position);
         if (view.y < -70) // 블럭 자동 파괴
@@ -32,7 +33,26 @@ public class BlockControl : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision) // 충돌 시
     {
-        gameObject.layer = 9;
+       
         transform.GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
+        
+        if (collision.gameObject.CompareTag("Floor"))
+        {
+            gameObject.layer = 9;
+            gameObject.tag = "Floor";
+        }
+       
+       
+        if (collision.gameObject.CompareTag("Player") && gameObject.layer == 8)
+        {
+            
+            Destroy(gameObject);
+        }
+        if(collision.gameObject.CompareTag("Floor") && gameObject.layer == 9)
+        {
+           
+            rigid.constraints = RigidbodyConstraints2D.FreezeAll;
+
+        }
     }
 }

@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 5898328638122083271}
   m_Layer: 8
   m_Name: Block_Prefab
-  m_TagString: Block_Prefab
+  m_TagString: Non_Floor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -135,7 +135,7 @@ Rigidbody2D:
   m_AngularDrag: 0.05
   m_GravityScale: 150
   m_Material: {fileID: 0}
-  m_Interpolate: 0
+  m_Interpolate: 2
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4

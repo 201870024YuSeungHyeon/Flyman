@@ -5,8 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - Floor
-  - Block_Prefab
   - Eliminator
+  - Non_Floor
   layers:
   - Default
   - TransparentFX
