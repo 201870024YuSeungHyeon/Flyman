@@ -8,12 +8,13 @@ public class PlayerControl : MonoBehaviour
     Rigidbody2D rigid;
 
     public float moveSpeed = 1f;
-    public float jumpPower = 1f;
+    public float jumpPower = 5f;
 
     bool isJumping = false;
    
     bool canjump = false;
     public Gaugebar gb;
+    private Vector2 vector;
 
  
    
@@ -28,25 +29,25 @@ public class PlayerControl : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            isJumping = true;
+            rigid.AddForce(Vector2.up * jumpPower, ForceMode2D.Impulse);
         }
         if (Input.GetKeyDown(KeyCode.Space))
         {
             if (gameObject.layer == 7 && rigid.gravityScale != 0 && gb.CurrentValue == 1) // 부스터 ON
             {
                 rigid.gravityScale = 0;
-                transform.GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
+                //transform.GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
                 gb.isValue = true;
             }
             else if (rigid.gravityScale == 0) // 부스터 수동 OFF
             {
-                rigid.gravityScale = 150;
+                rigid.gravityScale = 4;
                 gb.isValue = false;
             }
         }
         if (gb.CurrentValue <= 0) // 부스터 자동 OFF(부스터 게이지가 0일 때)
         {
-            rigid.gravityScale = 150;
+            rigid.gravityScale = 4;
             gb.isValue = false;
         }
     }
@@ -61,8 +62,13 @@ public class PlayerControl : MonoBehaviour
 
    void AirMove() // 공중 이동
     {
-        Vector3 moveVelocity = Vector3.zero;
-
+        if (gameObject.layer == 7)
+        {
+            vector.x = Input.GetAxisRaw("Horizontal");
+            vector.y = Input.GetAxisRaw("Vertical");
+            rigid.velocity = vector * moveSpeed;
+        }
+        /*
         if (gameObject.layer == 7) // 공중 대각선, 직선 이동
         {
             if (Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.W))
@@ -99,11 +105,13 @@ public class PlayerControl : MonoBehaviour
             }
             transform.position += moveVelocity * moveSpeed * Time.deltaTime;
         }
-        
+        */
+
     }
 
     void Jump() // 점프
     {
+        /*
         if(gameObject.layer == 7) {
             isJumping = false;
         }
@@ -113,11 +121,11 @@ public class PlayerControl : MonoBehaviour
                 return;
             gameObject.layer = 7;
             
-        
-            rigid.velocity = Vector2.zero;
-
+            rigid.AddForce(Vector2.up * jumpPower, ForceMode2D.Impulse);
+            
             Vector2 jumpVelocity = new Vector2(0, jumpPower);
             rigid.AddForce(jumpVelocity, ForceMode2D.Impulse);
+            
 
             isJumping = false;
         }
@@ -125,12 +133,19 @@ public class PlayerControl : MonoBehaviour
         {
             return;
         }
+        */
+        
     }
 
 
     void FloorMove() // 지상 이동
     {
-        Vector3 moveVelocity = Vector3.zero;
+        if (gameObject.layer == 6)
+        {
+            vector.x = Input.GetAxisRaw("Horizontal");
+            rigid.velocity = vector * moveSpeed;
+        }
+        /*
         if (gameObject.layer == 6)
         {
 
@@ -145,6 +160,7 @@ public class PlayerControl : MonoBehaviour
 
             transform.position += moveVelocity * moveSpeed * Time.deltaTime;
         }
+        */
     }
 
 
@@ -157,6 +173,7 @@ public class PlayerControl : MonoBehaviour
                 gameObject.layer = 6;
                 rigid.gravityScale = 150;
                 gb.isValue = false;
+
             }
         }
     }
