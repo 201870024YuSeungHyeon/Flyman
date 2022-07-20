@@ -8,11 +8,9 @@ public class PlayerControl : MonoBehaviour
     Rigidbody2D rigid;
 
     public float moveSpeed = 1f;
-    public float jumpPower = 5f;
+    public float jumpPower = 1f;
 
     bool isJumping = false;
-   
-    bool canjump = false;
     public Gaugebar gb;
     private Vector2 vector;
 
@@ -27,27 +25,28 @@ public class PlayerControl : MonoBehaviour
    
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space) && !isJumping)
         {
             rigid.AddForce(Vector2.up * jumpPower, ForceMode2D.Impulse);
+            isJumping = true;
+            gameObject.layer = 7;
         }
         if (Input.GetKeyDown(KeyCode.Space))
         {
             if (gameObject.layer == 7 && rigid.gravityScale != 0 && gb.CurrentValue == 1) // 부스터 ON
             {
                 rigid.gravityScale = 0;
-                //transform.GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
                 gb.isValue = true;
             }
             else if (rigid.gravityScale == 0) // 부스터 수동 OFF
             {
-                rigid.gravityScale = 4;
+                rigid.gravityScale = 150;
                 gb.isValue = false;
             }
         }
         if (gb.CurrentValue <= 0) // 부스터 자동 OFF(부스터 게이지가 0일 때)
         {
-            rigid.gravityScale = 4;
+            rigid.gravityScale = 150;
             gb.isValue = false;
         }
     }
@@ -55,19 +54,19 @@ public class PlayerControl : MonoBehaviour
     void FixedUpdate()
     {
         FloorMove();
-        Jump();
         AirMove();
     }
 
 
    void AirMove() // 공중 이동
     {
+        /*
         if (gameObject.layer == 7)
         {
             vector.x = Input.GetAxisRaw("Horizontal");
-            vector.y = Input.GetAxisRaw("Vertical");
             rigid.velocity = vector * moveSpeed;
         }
+        */
         /*
         if (gameObject.layer == 7) // 공중 대각선, 직선 이동
         {
@@ -108,34 +107,29 @@ public class PlayerControl : MonoBehaviour
         */
 
     }
-
+    
+    /*
     void Jump() // 점프
     {
-        /*
-        if(gameObject.layer == 7) {
+        if (gameObject.layer == 7) {
             isJumping = false;
         }
         if (!canjump)
         {
             if (!isJumping) 
                 return;
-            gameObject.layer = 7;
-            
-            rigid.AddForce(Vector2.up * jumpPower, ForceMode2D.Impulse);
             
             Vector2 jumpVelocity = new Vector2(0, jumpPower);
             rigid.AddForce(jumpVelocity, ForceMode2D.Impulse);
-            
-
+            gameObject.layer = 7;
             isJumping = false;
         }
         else
         {
             return;
         }
-        */
-        
     }
+    */
 
 
     void FloorMove() // 지상 이동
@@ -145,6 +139,7 @@ public class PlayerControl : MonoBehaviour
             vector.x = Input.GetAxisRaw("Horizontal");
             rigid.velocity = vector * moveSpeed;
         }
+        
         /*
         if (gameObject.layer == 6)
         {
@@ -171,9 +166,8 @@ public class PlayerControl : MonoBehaviour
             if (collision.gameObject.CompareTag("Floor")) // 지상에서 상태 변경
             {
                 gameObject.layer = 6;
-                rigid.gravityScale = 150;
                 gb.isValue = false;
-
+                isJumping = false;
             }
         }
     }
