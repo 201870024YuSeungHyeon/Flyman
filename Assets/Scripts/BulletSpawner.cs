@@ -30,7 +30,7 @@ public class BulletSpawner : MonoBehaviour
         {
             timeAfterSpawn = 0f;
             GameObject bullet = Instantiate(bulletprefab, transform.position, transform.rotation);
-            bullet.transform.localScale = new Vector3(120 , 120, 1);
+           
 
             bullet.transform.LookAt(target);
             spawnRate = Random.Range(spawnRateMin, spawnRateMax);
