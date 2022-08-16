@@ -6,13 +6,10 @@ public class Bullet : MonoBehaviour
 {
 
     public float bulletspeed;
-    private Rigidbody2D bulletrigid;
 
     // Start is called before the first frame update
     void Start()
     {
-        bulletrigid = GetComponent<Rigidbody2D>();
-        bulletrigid.velocity = transform.forward * bulletspeed;
 
         Destroy(gameObject, 15);
     }
